@@ -1,0 +1,58 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: ["**"]
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # When building a tag like v1.2.3, stamp that version into the package
+      - name: Set version from tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          echo "Building version $version"
+          jq --arg v "$version" '.info.version = $v' qpm.json > qpm.tmp && mv qpm.tmp qpm.json
+          jq --arg v "$version" '.config.info.version = $v' qpm.shared.json > qpm.tmp && mv qpm.tmp qpm.shared.json
+
+      - name: Setup QPM
+        uses: Fernthedev/qpm-action@v1
+        with:
+          workflow_token: ${{ secrets.GITHUB_TOKEN }}
+          restore: true
+          resolve_ndk: true
+          cache: true
+
+      - name: Build & Create QMOD
+        run: qpm qmod zip
+
+      - name: Upload QMOD artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CyrillicFix.qmod
+          path: ./CyrillicFix.qmod
+          if-no-files-found: error
+
+      - name: Upload debug symbols artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug_libcyrillic-fix.so
+          path: ./build/debug/libcyrillic-fix.so
+          if-no-files-found: warn
+
+      - name: Publish GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./CyrillicFix.qmod
+          generate_release_notes: true

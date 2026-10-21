@@ -1,0 +1,9 @@
+build/
+extern/
+extern.cmake
+qpm_defines.cmake
+ndkpath.txt
+*.qmod
+build.log
+publish.ps1
+publish.sh

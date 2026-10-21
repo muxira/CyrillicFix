@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Lauriethefish/QuestPatcher.QMod/main/QuestPatcher.QMod/Resources/qmod.schema.json",
+  "_QPVersion": "1.1.0",
+  "name": "${mod_name}",
+  "id": "${mod_id}",
+  "modloader": "Scotland2",
+  "author": "muxira",
+  "version": "${version}",
+  "packageId": "com.beatgames.beatsaber",
+  "packageVersion": "1.40.8_7379",
+  "description": "Fixes Cyrillic text (song names, artists, mappers) showing up as '?' and '.' by rendering Cyrillic with a real font (Android system Roboto or your own font.ttf). Works alongside Unicode.",
+  "coverImage": "cover.png",
+  "dependencies": [],
+  "modFiles": [],
+  "lateModFiles": [
+    "${binary}"
+  ],
+  "libraryFiles": [],
+  "fileCopies": []
+}

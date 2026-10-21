@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/QuestPackageManager/QPM.Package/refs/heads/main/qpm.schema.json",
+  "version": "0.1.0",
+  "sharedDir": "shared",
+  "dependenciesDir": "extern",
+  "info": {
+    "name": "CyrillicFix",
+    "id": "cyrillic-fix",
+    "version": "1.0.0",
+    "url": "https://github.com/muxira/CyrillicFix",
+    "additionalData": {
+      "overrideSoName": "libcyrillic-fix.so",
+      "cmake": true
+    }
+  },
+  "workspace": {
+    "scripts": {
+      "build": [
+        "cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -B build",
+        "cmake --build ./build"
+      ]
+    },
+    "ndk": "^27.2.12479018",
+    "qmodIncludeDirs": [
+      "build",
+      "extern/libs",
+      "."
+    ],
+    "qmodIncludeFiles": [],
+    "qmodOutput": "CyrillicFix.qmod"
+  },
+  "dependencies": [
+    {
+      "id": "beatsaber-hook",
+      "versionRange": "^6.4.2",
+      "additionalData": {}
+    },
+    {
+      "id": "scotland2",
+      "versionRange": "^0.1.6",
+      "additionalData": {
+        "includeQmod": false
+      }
+    },
+    {
+      "id": "bs-cordl",
+      "versionRange": "^4008.0.0",
+      "additionalData": {}
+    },
+    {
+      "id": "paper2_scotland2",
+      "versionRange": "^4.6.4",
+      "additionalData": {}
+    }
+  ]
+}
